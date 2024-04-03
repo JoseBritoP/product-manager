@@ -1,14 +1,26 @@
 import { Request,Response } from "express";
-import { createProduct } from "../controllers/product";
+import { createProduct, getProductById, getProducts } from "../controllers/product";
 
 
-export async function getProducts(req:Request,res:Response) {
-  res.status(200).json({DIY:"GET Products"})
+export async function GET(req:Request,res:Response) {
+  try {
+    const products = await getProducts();
+    return res.status(200).json(products)
+  } catch (error:any) {
+    return res.status(404).json({error:error.message})
+  }
 }
 
 export async function GETBYID(req:Request,res:Response) {
   const { id } = req.params;
-  res.status(200).json({DIY:`GET Product ${id}`})
+
+  try {
+    const product = await getProductById(id);
+    return res.status(200).json(product)
+  } catch (error:any) {
+    return res.status(404).json({error:error.message})
+  }
+
 }
 
 export async function POST(req:Request,res:Response) {
