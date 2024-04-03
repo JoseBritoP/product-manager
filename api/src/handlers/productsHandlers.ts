@@ -1,5 +1,6 @@
 import { Request,Response } from "express";
 import { createProduct, getProductById, getProducts } from "../controllers/product";
+import { updateProduct } from "../controllers/product/03 - updateProduct";
 
 
 export async function GET(req:Request,res:Response) {
@@ -35,6 +36,14 @@ export async function POST(req:Request,res:Response) {
 
 export async function PUT(req:Request,res:Response) {
   const { id } = req.params;
+  const data = req.body;
+
+  try {
+    const productUpdated = await updateProduct({id,data});
+    return res.status(200).json(productUpdated)
+  } catch (error:any) {
+    return res.status(400).json({error:error.message})
+  }
 
   res.status(200).json({DIY:`PUT Product ${id}`})
 }
@@ -46,6 +55,12 @@ export async function PATCH(req:Request,res:Response) {
 }
 
 export async function DELETE(req:Request,res:Response) {
+  const { id } = req.params;
+
+  res.status(200).json({DIY:`DELETE Product ${id}`})
+}
+
+export async function TRUEDELETE(req:Request,res:Response) {
   const { id } = req.params;
 
   res.status(200).json({DIY:`DELETE Product ${id}`})
