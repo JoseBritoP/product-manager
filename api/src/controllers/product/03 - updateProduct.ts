@@ -22,3 +22,17 @@ export const updateProduct = async ({id,data}:UpdateProduct) => {
 
   return product;
 }
+
+export const patchInStock =  async (id:string) => {
+
+  const product:any = await Product.findByPk(id);
+
+  if(!product) throw new Error(`Product not found`)
+
+  product.inStock = !product.inStock;
+
+  await product.save();
+
+  return product;
+
+};

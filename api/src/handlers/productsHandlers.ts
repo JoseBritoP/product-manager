@@ -1,5 +1,5 @@
 import { Request,Response } from "express";
-import { createProduct, getProductById, getProducts,updateProduct,deleteLogical,deleteProduct } from "../controllers/product";
+import { createProduct, getProductById, getProducts,updateProduct,deleteLogical,deleteProduct, patchInStock } from "../controllers/product";
 
 
 export async function GET(req:Request,res:Response) {
@@ -49,7 +49,12 @@ export async function PUT(req:Request,res:Response) {
 
 export async function PATCH(req:Request,res:Response) {
   const { id } = req.params;
-
+  try {
+    const inStock = await patchInStock(id);
+    return res.status(200).json(inStock);
+  } catch (error:any) {
+    return res.status(404).json({error:error.message})
+  }
   res.status(200).json({DIY:`PATCH Product ${id}`})
 }
 
