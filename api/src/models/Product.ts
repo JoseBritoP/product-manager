@@ -10,7 +10,7 @@ export default (sequelize:Sequelize) => {
     name:{
       type:DataTypes.STRING(100),
       allowNull:false,
-      unique:false
+      unique:true
     },
     price:{
       type:DataTypes.FLOAT,
