@@ -10,3 +10,11 @@ export type ProductType = {
   inStock:boolean,
   deleted?:boolean
 }
+
+export type UpdateProduct = {
+  id:string,
+  data:{
+    name?:string,
+    price?:number
+  }
+};
