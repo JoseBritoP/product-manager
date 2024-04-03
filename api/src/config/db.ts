@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 
 const { DATABASE_URI } = process.env;
 
