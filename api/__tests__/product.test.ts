@@ -1,6 +1,19 @@
 import request from 'supertest';
 import app from '../src/app';
 
+describe('GET /product - Error case',()=>{
+  it('should response with a 404 status code',async()=>{
+    const response = await request(app).get('/product');
+    expect(response.status).toBe(404);
+    expect(response.ok).toBe(false);
+  });
+  it('should response with a message "No products"',async()=>{
+    const response = await request(app).get('/product');
+    expect(response.body).toHaveProperty('error')
+    expect(response.body.error).toBe(`No products`);
+  })
+})
+
 describe('POST /product',()=>{
   describe('Success case',()=>{
     it('should respond with a 201 status code',async()=>{
@@ -53,4 +66,16 @@ describe('POST /product',()=>{
       expect(response.body).toHaveProperty('error')
     })
   })
-})
+});
+
+describe('GET /product - Success case',()=>{
+  it('should respond with a 200 status code',async()=>{
+    const response: request.Response = await request(app).get('/product');
+    expect(response.status).toBe(200);
+    expect(response.ok).toBe(true);
+  });
+  it('should return an array of products',async()=>{
+    const response: request.Response = await request(app).get('/product');
+    expect(response.body).toBeInstanceOf(Array);
+  });
+});
