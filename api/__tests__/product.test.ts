@@ -111,3 +111,108 @@ describe('GET /product/:id',()=>{
     })
   });
 })
+
+describe('PUT /product/:id',()=>{
+  describe('Success Case',()=>{
+    it('Should return the Product with the name change',async()=>{
+      const newProduct = {
+        "name":"MousePad",
+        "price":200
+      };
+      const res = await request(app).post('/product').send(newProduct);
+
+      const { id, name, price } = res.body;
+
+      const updatedProduct = {
+        "name":"MousePad Edit"
+      }
+      const updateProduct = await request(app).put(`/product/${id}`).send(updatedProduct);
+      expect(updateProduct.status).toBe(200);
+      expect(updateProduct.body.name).not.toEqual(name)
+      expect(updateProduct.body.price).toEqual(price)
+    })
+    it('Should return the Product with the price change',async()=>{
+      const newProduct = {
+        "name":"Monitor Gaming",
+        "price":300
+      };
+      const res = await request(app).post('/product').send(newProduct);
+
+      const { id, name, price } = res.body;
+
+      const updatedProduct = {
+        "price":499
+      }
+      const updateProduct = await request(app).put(`/product/${id}`).send(updatedProduct);
+      expect(updateProduct.status).toBe(200);
+      expect(updateProduct.body.name).toEqual(name)
+      expect(updateProduct.body.price).not.toEqual(price)
+    })
+    it('Should return the Product with the props changes',async()=>{
+      const newProduct = {
+        "name":"Keyboard",
+        "price":300
+      };
+      const res = await request(app).post('/product').send(newProduct);
+
+      const { id, name, price } = res.body;
+
+      const updatedProduct = {
+        "name":"Keyboard Gaming",
+        "price":399
+      }
+      const updateProduct = await request(app).put(`/product/${id}`).send(updatedProduct);
+      expect(updateProduct.status).toBe(200);
+      expect(updateProduct.body.name).not.toEqual(name)
+      expect(updateProduct.body.price).not.toEqual(price)
+    })
+  })
+  describe('Error Case',()=>{
+    it('Should return a 400 bad request code',async()=>{
+      const newProduct = {
+        "name":"Airpods",
+        "price":199
+      };
+      const response = await request(app).post('/product').send(newProduct);
+
+      const { id, name, price } = response.body;
+      const product ={
+        "name":"",
+        "price":"",
+      }
+      const badRequest = await request(app).put(`/product/${id}`).send(product);
+      expect(badRequest.status).toBe(400);
+
+    })
+    it('Should return a message if the prop is missing',async()=>{
+      const newProduct = {
+        "name":"Cable USB",
+        "price":199
+      };
+      const response = await request(app).post('/product').send(newProduct);
+
+      const { id, name, price } = response.body;
+      const product ={
+        "name":"",
+        "price":"",
+      }
+      const badRequest = await request(app).put(`/product/${id}`).send(product);
+      expect(badRequest.status).toBe(400);
+      expect(badRequest.body).toHaveProperty('error');
+      expect(badRequest.badRequest).toBe(true);
+      expect(badRequest.body.error).toMatch('Props missing')
+
+    })
+    it('Should return a message if product not found',async()=>{
+      const id ='2bed6715-9d45-4402-93ef-f61220863eb4';
+      const product = {
+        "name":"Product Edit",
+        "price":300
+      };
+      const response = await request(app).put(`/product/${id}`).send(product);
+      expect(response.body).toHaveProperty('error');
+      expect(response.body.error).toBe('Product not found')
+      console.log(response.body)
+    })
+  })
+})

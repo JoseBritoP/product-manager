@@ -18,8 +18,6 @@ export const createProduct = async ({name,price}:NewProduct) => {
   }
   const newProduct = await Product.create(productFormat);
 
-  if(!newProduct) throw new Error(`An error has ocurred...`);
-
   return newProduct
 
 }

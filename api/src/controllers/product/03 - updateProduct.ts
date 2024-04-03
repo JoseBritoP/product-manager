@@ -4,6 +4,8 @@ import { getProductById } from "./02 - getProducts";
 
 export const updateProduct = async ({id,data}:UpdateProduct) => {
 
+  await getProductById(id);
+
   if(!data.name && !data.price) throw new Error(`Props missing`)
   
   const checkUpdate = await Product.update(
