@@ -24,7 +24,7 @@ export const getProductById = async (id:string) => {
     attributes:['id','name','price','inStock']
   });
 
-  if(!product) throw new Error(`No products`);
+  if(!product) throw new Error(`Product not found`);
 
   return product
 

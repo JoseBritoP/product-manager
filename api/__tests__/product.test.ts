@@ -79,3 +79,35 @@ describe('GET /product - Success case',()=>{
     expect(response.body).toBeInstanceOf(Array);
   });
 });
+
+describe('GET /product/:id',()=>{
+  describe('Success Case',()=>{
+    it('Should response with a json with Product properties',async()=>{
+      const newProduct = {
+        "name":"Mouse - Testing - Two",
+        "price":299
+      };
+      const res = await request(app).post('/product').send(newProduct);
+      const response = await request(app).get(`/product/${res.body.id}`);
+      const { id, name, price } = response.body;
+      expect(id).toBeDefined();
+      expect(name).toEqual(newProduct.name);
+      expect(price).toEqual(newProduct.price);
+    })
+  });
+  describe('Error Case',()=>{
+    const id = '10164e2d-c338-46ff-9ef9-9df00f18ee7e'
+    it('Should response with a 404 status code',async()=>{
+      const response = await request(app).get(`/product/${id}`);
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty('error');
+      expect(response.body.error).toBe('Product not found');
+    })
+    it('Should response with message:"Product not found"',async()=>{
+      const response = await request(app).get(`/product/${id}`);
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty('error');
+      expect(response.body.error).toBe('Product not found');
+    })
+  });
+})
