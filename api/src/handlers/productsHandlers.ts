@@ -1,6 +1,5 @@
 import { Request,Response } from "express";
-import { createProduct, getProductById, getProducts } from "../controllers/product";
-import { updateProduct } from "../controllers/product/03 - updateProduct";
+import { createProduct, getProductById, getProducts,updateProduct,deleteLogical,deleteProduct } from "../controllers/product";
 
 
 export async function GET(req:Request,res:Response) {
@@ -56,12 +55,20 @@ export async function PATCH(req:Request,res:Response) {
 
 export async function DELETE(req:Request,res:Response) {
   const { id } = req.params;
-
-  res.status(200).json({DIY:`DELETE Product ${id}`})
+  try {
+    const productDeleted = await deleteLogical(id);
+    return res.status(200).json(productDeleted);
+  } catch (error:any) {
+    return res.status(404).json({error:error.message})
+  }
 }
 
 export async function TRUEDELETE(req:Request,res:Response) {
   const { id } = req.params;
-
-  res.status(200).json({DIY:`DELETE Product ${id}`})
+  try {
+    const productDeleted = await deleteProduct(id);
+    return res.status(200).json(productDeleted);
+  } catch (error:any) {
+    return res.status(404).json({error:error.message})
+  }
 }
