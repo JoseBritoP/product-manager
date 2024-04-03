@@ -13,9 +13,9 @@ export async function connectDB(){
   try {
     await db.authenticate();
     db.sync({force:true})
-    console.log(`Connection successfully to Database`)
+    // console.log(`Connection successfully to Database`)
   } catch (error:any) {
-    console.log(error)
+    // console.log(error)
     console.log('Error db connection')
   }
 }
