@@ -1,4 +1,5 @@
 import { Request,Response } from "express";
+import { createProduct } from "../controllers/product";
 
 
 export async function getProducts(req:Request,res:Response) {
@@ -11,7 +12,13 @@ export async function GETBYID(req:Request,res:Response) {
 }
 
 export async function POST(req:Request,res:Response) {
-  res.status(201).json({DIY:"POST Products"})
+  const data = req.body;
+  try {
+    const newProduct = await createProduct(data);
+    return res.status(201).json(newProduct)
+  } catch (error:any) {
+    return res.status(400).json({error:error.message})
+  }
 }
 
 export async function PUT(req:Request,res:Response) {
