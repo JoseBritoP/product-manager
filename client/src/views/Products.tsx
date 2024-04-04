@@ -5,12 +5,16 @@ import { Product } from "../types";
 
 export async function loader() {
   const products = await getProducts()
-  return products
+  if(products){
+    return products
+  }
+  return null
 }
 
 export default function Products() {
 
   const products = useLoaderData() as Product[];
+  console.log(products)
 
   return (
     <>
@@ -29,7 +33,8 @@ export default function Products() {
            </tr>
           </thead>
           <tbody>
-            {products.map((product)=>(<ProductDetails key={product.id} product={product}/>))}
+            {products?.map((product)=>(<ProductDetails key={product.id} product={product}/>))}
+            {products === null && <p className="text-center text-lg font-medium">No products</p>}
           </tbody>
         </table>
       </div>

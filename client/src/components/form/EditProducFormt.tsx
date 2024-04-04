@@ -5,7 +5,6 @@ import { Product } from '../../types';
 
 export async function loader({params}:LoaderFunctionArgs){
   const product = await getProductById(params.id!);
-  console.log(product)
   // if(!product) throw new Response('',{status:404,statusText:'Product not found'})
   if(!product) {
     return redirect('/')

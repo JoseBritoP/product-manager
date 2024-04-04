@@ -1,10 +1,17 @@
-import { inStockProduct } from "../../server/Product.endpoints";
+import { deleteProduct, inStockProduct } from "../../server/Product.endpoints";
 import { Product } from "../../types";
 import { formatCurrency } from "../../utils";
-import { useNavigate } from "react-router-dom";
+import { ActionFunctionArgs, Form, useNavigate, redirect } from "react-router-dom";
 
 interface ProductDetailProps {
  product:Product 
+}
+
+export async function action({params}:ActionFunctionArgs){
+  await deleteProduct(params.id!)
+  console.log('Deleting...')
+  console.log(params.id)
+  return redirect('/')
 }
 
 
@@ -29,8 +36,17 @@ export default function ProductDetails({product}:ProductDetailProps) {
         {product.inStock ? 'In Stock' : 'Out Stock'}
       </td>
       <td className="p-3 text-lg text-gray-800 dark:text-gray-200 ">
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center w-full justify-between">
           <button onClick={()=>navigate(`/product/${product.id}/edit`)} className="text-sm text-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 cursor-pointer rounded-md font-medium">Edit</button>
+          <Form method="POST" action={`product/${product.id}/delete`}
+            // onSubmit={(e)=>{
+            //   if(!confirm('Delete?')){
+            //     e.preventDefault();
+            //   }
+            // }}
+          >
+            <button onClick={()=>navigate(`/product/${product.id}/edit`)} className="text-sm text-center px-4 py-2 bg-red-600 hover:bg-red-700 cursor-pointer rounded-md font-medium">X</button>
+          </Form>
         </div>
       </td>
     </tr> 

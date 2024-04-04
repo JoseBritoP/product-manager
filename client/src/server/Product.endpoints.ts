@@ -77,7 +77,6 @@ export async function inStockProduct(id:Product['id']){
     const { data } = await axios.patch(url);
     const result = safeParse(ProductSchema,data)
     if(result.success) return result.output;
-    else throw new Error(`No products...`)
       
   } catch (error) {
     console.log('Error') 
