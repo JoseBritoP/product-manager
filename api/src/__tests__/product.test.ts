@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../src/app';
+import app from '../app';
 
 describe('GET /product - Error case',()=>{
   it('should response with a 404 status code',async()=>{
