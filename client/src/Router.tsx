@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Home, Error, Products, ProductForm, EditProductForm } from "./views";
 import { action as NewProductAction } from "./components/Form/Form";
-import { loader as productsLoader } from "./views/Products";
+import { loader as productsLoader, action as inStockAction } from "./views/Products";
 import { loader as editProductLoader } from "./components/Form/EditProducFormt";
 import { action as editProductAction } from "./components/Form/EditProducFormt";
 import { action as deleteProductAction } from "./components/shared/ProductDetails";
@@ -14,7 +14,8 @@ export const router = createBrowserRouter([
       {
         index:true,
         element:<Products/>,
-        loader:productsLoader
+        loader:productsLoader,
+        action:inStockAction
       },
       {
         path:'/product/new',

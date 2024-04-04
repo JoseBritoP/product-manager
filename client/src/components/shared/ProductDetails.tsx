@@ -1,7 +1,7 @@
-import { deleteProduct, inStockProduct } from "../../server/Product.endpoints";
+import { deleteProduct } from "../../server/Product.endpoints";
 import { Product } from "../../types";
 import { formatCurrency } from "../../utils";
-import { ActionFunctionArgs, Form, useNavigate, redirect } from "react-router-dom";
+import { ActionFunctionArgs, Form, useNavigate, redirect, useFetcher } from "react-router-dom";
 
 interface ProductDetailProps {
  product:Product 
@@ -9,7 +9,6 @@ interface ProductDetailProps {
 
 export async function action({params}:ActionFunctionArgs){
   await deleteProduct(params.id!)
-  console.log('Deleting...')
   console.log(params.id)
   return redirect('/')
 }
@@ -17,10 +16,7 @@ export async function action({params}:ActionFunctionArgs){
 
 export default function ProductDetails({product}:ProductDetailProps) {
 
-  const handleInStock = (id:string) => {
-    inStockProduct(id);
-  };
-
+  const fetcher = useFetcher();
   const navigate = useNavigate()
   return (
     <tr className="border-b ">
@@ -30,10 +26,12 @@ export default function ProductDetails({product}:ProductDetailProps) {
       <td className="p-3 text-center text-lg text-gray-800 dark:text-gray-200">
         {formatCurrency(product.price)}
       </td>
-      <td onClick={()=>handleInStock(product.id)} className={`
+      <td className={`
         p-3 text-lg text-center font-medium
         ${product.inStock ? 'text-emerald-600 dark:text-emerald-500' : 'text-red-600 dark:text-red-500'} `}>
-        {product.inStock ? 'In Stock' : 'Out Stock'}
+        <fetcher.Form method="POST">
+          <button name="id" value={product.id} className="rounded-lg p-2 text-sm font-semibold border border-black-100"> {product.inStock ? 'In Stock' : 'Out Stock'}</button>
+        </fetcher.Form>
       </td>
       <td className="p-3 text-lg text-gray-800 dark:text-gray-200 ">
         <div className="flex gap-2 items-center w-full justify-between">

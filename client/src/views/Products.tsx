@@ -1,7 +1,14 @@
-import { Link, useLoaderData } from "react-router-dom"
-import { getProducts } from "../server/Product.endpoints"
+import { ActionFunctionArgs, Link, useLoaderData } from "react-router-dom"
+import { getProducts, inStockProduct } from "../server/Product.endpoints"
 import ProductDetails from "../components/shared/ProductDetails";
 import { Product } from "../types";
+
+export async function action({request}:ActionFunctionArgs){
+  const data = Object.fromEntries( await request.formData())
+  console.log(data.id)
+  await inStockProduct(String(data.id))
+  return null
+}
 
 export async function loader() {
   const products = await getProducts()
@@ -14,7 +21,6 @@ export async function loader() {
 export default function Products() {
 
   const products = useLoaderData() as Product[];
-  console.log(products)
 
   return (
     <>
