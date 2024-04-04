@@ -5,6 +5,11 @@ export const DraftProductSchema = object({
   price:number()
 })
 
+export const DraftProductEditSchema = object({
+  name:string(),
+  price:number()
+})
+
 export const ProductSchema = object({
   id:string(),
   name:string(),

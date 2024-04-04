@@ -1,3 +1,4 @@
+import { inStockProduct } from "../../server/Product.endpoints";
 import { Product } from "../../types";
 import { formatCurrency } from "../../utils";
 import { useNavigate } from "react-router-dom";
@@ -5,7 +6,14 @@ import { useNavigate } from "react-router-dom";
 interface ProductDetailProps {
  product:Product 
 }
+
+
 export default function ProductDetails({product}:ProductDetailProps) {
+
+  const handleInStock = (id:string) => {
+    inStockProduct(id);
+  };
+
   const navigate = useNavigate()
   return (
     <tr className="border-b ">
@@ -15,12 +23,9 @@ export default function ProductDetails({product}:ProductDetailProps) {
       <td className="p-3 text-center text-lg text-gray-800 dark:text-gray-200">
         {formatCurrency(product.price)}
       </td>
-      <td className={`
+      <td onClick={()=>handleInStock(product.id)} className={`
         p-3 text-lg text-center font-medium
-        ${product.inStock ? 'text-emerald-400 dark:text-emerald-500' : 'text-red-400 dark:text-red-500'} 
-        text-gray-800 
-        dark:text-gray-200
-      `}>
+        ${product.inStock ? 'text-emerald-600 dark:text-emerald-500' : 'text-red-600 dark:text-red-500'} `}>
         {product.inStock ? 'In Stock' : 'Out Stock'}
       </td>
       <td className="p-3 text-lg text-gray-800 dark:text-gray-200 ">

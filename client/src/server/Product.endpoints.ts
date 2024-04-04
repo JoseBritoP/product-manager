@@ -1,6 +1,6 @@
 import axios from "axios"
 import { safeParse } from "valibot"
-import { DraftProductSchema, Product, ProductSchema, ProductsSchema } from "../types"
+import { DraftProductEditSchema, DraftProductSchema, Product, ProductSchema, ProductsSchema } from "../types"
 
 type ProductData = {
   [k: string]: FormDataEntryValue
@@ -27,10 +27,11 @@ export async function addProduct (data:ProductData){
 
 export async function editProduct(id:Product['id'],data:ProductData){
   try {
-    const result = safeParse(DraftProductSchema,{
+    const result = safeParse(DraftProductEditSchema,{
       name:data.name,
       price:+data.price
     });
+    console.log(result)
     if(result.success){
       const url = `${import.meta.env.VITE_API_URL}/product/${id}`;
       await axios.put(url,{
@@ -61,6 +62,19 @@ export async function getProductById(id:Product['id']){
   try {
     const url = `${import.meta.env.VITE_API_URL}/product/${id}`;
     const { data } = await axios.get(url);
+    const result = safeParse(ProductSchema,data)
+    if(result.success) return result.output;
+    else throw new Error(`No products...`)
+      
+  } catch (error) {
+    console.log('Error') 
+  }
+}
+
+export async function inStockProduct(id:Product['id']){
+  try {
+    const url = `${import.meta.env.VITE_API_URL}/product/${id}`;
+    const { data } = await axios.patch(url);
     const result = safeParse(ProductSchema,data)
     if(result.success) return result.output;
     else throw new Error(`No products...`)
