@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, Form, useActionData } from 'react-router-dom'
+import { ActionFunctionArgs, Form, useActionData,redirect } from 'react-router-dom'
 import ErrorMessage from '../shared/ErrorMessage';
 import { addProduct } from '../../server/Product.endpoints';
 
@@ -17,9 +17,8 @@ export async function action({request}:ActionFunctionArgs){
     return error
   }
 
-  addProduct(data);
-
-  return null
+  await addProduct(data);
+  return redirect('/')
 }
 
 export default function FormPage() {
