@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import Form from "../components/form/Form"
+import Form from "../components/Form/Form"
 
 export default function ProductForm() {
   return (

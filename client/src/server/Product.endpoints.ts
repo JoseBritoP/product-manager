@@ -7,20 +7,17 @@ type ProductData = {
 }
 
 export async function addProduct (data:ProductData){
-  console.log(data);
   try {
     const result = safeParse(DraftProductSchema,{
       name:data.name,
       price:+data.price
     });
-    console.log(result)
     if(result.success){
       const url = `${import.meta.env.VITE_API_URL}/product`;
-      const { data } = await axios.post(url,{
+      await axios.post(url,{
         name:result.output.name,
         price:result.output.price
       });
-      console.log(data)
     } else throw new Error(`Data invalid`)
 
   } catch (error) {

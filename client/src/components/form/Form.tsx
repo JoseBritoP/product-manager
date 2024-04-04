@@ -5,7 +5,6 @@ import { addProduct } from '../../server/Product.endpoints';
 export async function action({request}:ActionFunctionArgs){
   const form = await request.formData()
   const data = Object.fromEntries(form);
-  console.log(data)
 
   let error = '';
   if(Object.values(data).includes('')){
