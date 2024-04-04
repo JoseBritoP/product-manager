@@ -1,5 +1,6 @@
 import { ActionFunctionArgs, Form, useActionData } from 'react-router-dom'
 import ErrorMessage from '../shared/ErrorMessage';
+import { addProduct } from '../../server/Product.endpoints';
 
 export async function action({request}:ActionFunctionArgs){
   const form = await request.formData()
@@ -16,6 +17,8 @@ export async function action({request}:ActionFunctionArgs){
     },2000)
     return error
   }
+
+  addProduct(data);
 
   return null
 }
