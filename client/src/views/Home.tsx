@@ -9,7 +9,9 @@ export default function Home() {
           <DarkMode/>
         </div>
       </header>
-      <Outlet/>
+      <main className="mt-10 mx-auto max-w-6xl p-10 bg-white shadow dark:bg-slate-600 rounded-sm">
+        <Outlet/>
+      </main>
     </>
   )
 }
