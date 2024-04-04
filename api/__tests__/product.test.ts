@@ -343,4 +343,38 @@ describe('DELETE /product/:id',()=>{
   })
 });
 
-// describe('DELETE /product/delete/:id',()=>{});
+describe('DELETE /product/delete/:id',()=>{
+  describe('Success case',()=>{
+    it('Should return a 200 status code',async()=>{
+      const newProduct = {
+        "name":"GPU",
+        "price":299
+      }
+
+      const response = await request(app).post('/product').send(newProduct);
+
+      const res = await request(app).delete(`/product/delete/${response.body.id}`)
+      expect(res.status).toBe(200);
+    })
+    it('Should return a number of product deleted',async()=>{
+      const newProduct = {
+        "name":"GPU - SSD",
+        "price":299
+      }
+
+      const response = await request(app).post('/product').send(newProduct);
+
+      const res = await request(app).delete(`/product/delete/${response.body.id}`)
+      expect(res.status).toBe(200);
+      expect(res.body).toBe(1)
+    })
+  })
+  describe('Error case',()=>{
+    it('Should return a error if the product not exist',async()=>{
+      const id = '67c60b1d-1a82-44a7-98ff-77493005fd0c'
+      const res = await request(app).delete(`/product/delete/${id}`)
+      expect(res.body).toHaveProperty('error');
+      expect(res.body.error).toMatch(`An error has ocurred destroying the product ${id}`)
+    })
+  })
+});
