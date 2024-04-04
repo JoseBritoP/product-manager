@@ -19,7 +19,7 @@ export const deleteProduct = async (id:string) => {
     }
   });
 
-  if(!productDeleted) throw new Error(`An error has ocurred deleting the product ${id}`);
+  if(!productDeleted) throw new Error(`An error has ocurred destroying the product ${id}`);
 
   return productDeleted;
 

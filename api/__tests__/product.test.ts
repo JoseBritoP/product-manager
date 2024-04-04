@@ -293,3 +293,54 @@ describe('PATCH /product/:id',()=>{
     })
   })
 })
+
+describe('DELETE /product/:id',()=>{
+  describe('Success Case',()=>{
+    it('Should return a 200 status code if the product was successfully "deleted"',async()=>{
+      const newProduct = {
+        "name":"Keyboard mini - Pro",
+        "price":299
+      };
+
+      const response = await request(app).post('/product').send(newProduct);
+
+      const product = await request(app).delete(`/product/${response.body.id}`);
+      console.log(product.body)
+      expect(product.status).toBe(200);
+    })
+    it('Should return a Product with the property deleted in true',async()=>{
+      const newProduct = {
+        "name":"PS5",
+        "price":299
+      };
+
+      const response = await request(app).post('/product').send(newProduct);
+
+      const product = await request(app).delete(`/product/${response.body.id}`);
+      expect(product.headers['content-type']).toMatch(/application\/json/);
+      expect(product.status).toBe(200);
+      expect(product.body.id).toBeDefined();
+      expect(product.body.deleted).toBe(true);
+    })
+  })
+  describe('Error Case',()=>{
+    it('Should return a 404 status code if the product not exist',async()=>{
+      const id = '96f4b436-bbb8-49de-b4e1-8c9e561c151b'
+
+      const check = await request(app).patch(`/product/${id}`);
+      expect(check.headers['content-type']).toMatch(/application\/json/);
+      expect(check.status).toBe(404)
+    })
+    it('Should return a error property if the product not exist',async()=>{
+      const id = '96f4b436-bbb8-49de-b4e1-8c9e561c151b'
+
+      const check = await request(app).patch(`/product/${id}`);
+      expect(check.headers['content-type']).toMatch(/application\/json/);
+      expect(check.status).toBe(404)
+      expect(check.body).toHaveProperty('error');
+      expect(check.body.error).toEqual('Product not found');
+    })
+  })
+});
+
+// describe('DELETE /product/delete/:id',()=>{});
