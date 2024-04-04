@@ -212,7 +212,84 @@ describe('PUT /product/:id',()=>{
       const response = await request(app).put(`/product/${id}`).send(product);
       expect(response.body).toHaveProperty('error');
       expect(response.body.error).toBe('Product not found')
-      console.log(response.body)
+    })
+  })
+})
+
+describe('PATCH /product/:id',()=>{
+  describe('Success Case',()=>{
+    it('Should return a 200 status code',async()=>{
+      const newProduct = {
+        "name": "Controller PS5",
+        "price":49
+      };
+
+      const response = await request(app).post('/product').send(newProduct);
+
+      const { id, name, price, inStock } = response.body;
+
+      const check = await request(app).patch(`/product/${id}`);
+      expect(check.status).toBe(200)
+      expect(check.body.id).toBeDefined();
+      expect(check.body.name).toEqual(name)
+      expect(check.body.price).toEqual(price)
+      expect(check.body.inStock).not.toEqual(inStock);
+    });
+    it('Should return a json Product ',async()=>{
+      const newProduct = {
+        "name": "Controller PS4",
+        "price":49
+      };
+
+      const response = await request(app).post('/product').send(newProduct);
+
+      const { id, name, price, inStock } = response.body;
+
+      const check = await request(app).patch(`/product/${id}`);
+      expect(response.headers['content-type']).toMatch(/application\/json/);
+      expect(check.status).toBe(200)
+      expect(check.body.id).toBeDefined();
+      expect(check.body.name).toEqual(name)
+      expect(check.body.price).toEqual(price)
+      expect(check.body.inStock).not.toEqual(inStock);
+      expect(check.body.inStock).toEqual(false);
+    });
+    it('Should return a Product with inStock property in false',async()=>{
+      const newProduct = {
+        "name": "Xbox Controller",
+        "price":49
+      };
+
+      const response = await request(app).post('/product').send(newProduct);
+
+      const { id, name, price, inStock } = response.body;
+
+      const check = await request(app).patch(`/product/${id}`);
+      expect(response.headers['content-type']).toMatch(/application\/json/);
+      expect(check.status).toBe(200)
+      expect(check.body.id).toBeDefined();
+      expect(check.body.name).toEqual(name)
+      expect(check.body.price).toEqual(price)
+      expect(check.body.inStock).not.toEqual(inStock);
+      expect(check.body.inStock).toEqual(false);
+    });
+  })
+  describe('Error Case',()=>{
+    it('Should return a 404 status code if the product not exist',async()=>{
+      const id = '96f4b436-bbb8-49de-b4e1-8c9e561c151b'
+
+      const check = await request(app).patch(`/product/${id}`);
+      expect(check.headers['content-type']).toMatch(/application\/json/);
+      expect(check.status).toBe(404)
+    })
+    it('Should return a error property if the product not exist',async()=>{
+      const id = '96f4b436-bbb8-49de-b4e1-8c9e561c151b'
+
+      const check = await request(app).patch(`/product/${id}`);
+      expect(check.headers['content-type']).toMatch(/application\/json/);
+      expect(check.status).toBe(404)
+      expect(check.body).toHaveProperty('error');
+      expect(check.body.error).toEqual('Product not found');
     })
   })
 })
