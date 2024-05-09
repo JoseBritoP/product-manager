@@ -1,6 +1,7 @@
 import { Request,Response,NextFunction,ErrorRequestHandler, Router } from "express";
 import productRouter from "./productRouter";
-
+import swaggerUi from 'swagger-ui-express'
+import swaggerSpec from "../config/swagger";
 const mainRouter = Router();
 mainRouter.get('/',(req,res)=>{
   return res.send('hello')
@@ -8,7 +9,8 @@ mainRouter.get('/',(req,res)=>{
 
 // Endpoints
 
-mainRouter.use('/product',productRouter);
+mainRouter.use('/api/product',productRouter);
+mainRouter.use('/api/docs', swaggerUi.serve,swaggerUi.setup(swaggerSpec));
 
 mainRouter.use((req, res, next) => {
   const error:any = new Error(`La ruta ${req.originalUrl} con el método ${req.method} no está implementada`);
