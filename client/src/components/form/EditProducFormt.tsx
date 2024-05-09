@@ -45,22 +45,24 @@ export default function EditForm() {
       {error && <ErrorMessage>{error}</ErrorMessage>}
       <legend className="mt-10 ">
         <div className="mb-4">
-          <label className="text-gray-800 dark:text-gray-200" htmlFor="name">Product Name:</label>
+          <label className="text-gray-800 dark:text-gray-200 text-lg" htmlFor="name">Product Name:</label>
           <input 
               id="name"
               type="text"
-              className="mt-2 block w-full p-3 bg-gray-100 dark:bg-gray-400 rounded-md dark:placeholder:text-slate-200"
+              aria-label='Product Name to Edit'
+              className="mt-2 block w-full p-3 font-semibold bg-gray-100 dark:bg-gray-400 rounded-md dark:placeholder:text-slate-200"
               placeholder="Product name..."
               name="name"
               defaultValue={product.name}
               />
         </div>
         <div className="mb-4">
-          <label className="text-gray-800 dark:text-gray-200" htmlFor="price">Price:</label>
+          <label className="text-gray-800 dark:text-gray-200 text-lg" htmlFor="price">Price:</label>
           <input 
               id="price"
               type="number"
-              className="mt-2 block w-full p-3 bg-gray-50 dark:bg-gray-400 dark:placeholder:text-slate-200 rounded-md"
+              aria-label='Product Price to Edit'
+              className="mt-2 block w-full p-3 font-semibold bg-gray-50 dark:bg-gray-400 dark:placeholder:text-slate-200 rounded-md"
               placeholder="Price: 399..."
               name="price"
               defaultValue={product.price}
@@ -69,10 +71,11 @@ export default function EditForm() {
         <div className='flex justify-between items-center gap-x-20'>
           <input
             type="submit"
+            aria-label='Save changes'
             className="mt-5 w-full bg-green-700 hover:bg-green-800 p-2 text-white font-bold text-lg cursor-pointer rounded"
             value="Save changes"
             />
-          <button className='mt-5 w-full bg-red-700 hover:bg-red-800 p-2 text-white font-bold text-lg cursor-pointer rounded' >X</button>
+          <button aria-label='Cancel changes' className='mt-5 w-full bg-red-700 hover:bg-red-800 p-2 text-white font-bold text-lg cursor-pointer rounded' >X</button>
         </div>
       </legend>
     </Form>

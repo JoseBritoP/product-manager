@@ -31,28 +31,31 @@ export default function FormPage() {
       {error && <ErrorMessage>{error}</ErrorMessage>}
       <legend className="mt-10 ">
         <div className="mb-4">
-          <label className="text-gray-800 dark:text-gray-200" htmlFor="name">Product Name:</label>
+          <label className="text-gray-800 text-xl dark:text-gray-200" htmlFor="name">Product Name:</label>
           <input 
               id="name"
               type="text"
-              className="mt-2 block w-full p-3 bg-gray-100 dark:bg-gray-400 rounded-md dark:placeholder:text-slate-200"
+              className="mt-2 block  w-full p-3 bg-gray-100 dark:bg-gray-800 rounded-md dark:placeholder:text-slate-100 "
               placeholder="Product name..."
               name="name"
+              aria-label='Product name'
               />
         </div>
         <div className="mb-4">
-          <label className="text-gray-800 dark:text-gray-200" htmlFor="price">Price:</label>
+          <label className="text-gray-800 text-xl dark:text-gray-200" htmlFor="price">Price:</label>
           <input 
               id="price"
               type="number"
-              className="mt-2 block w-full p-3 bg-gray-50 dark:bg-gray-400 dark:placeholder:text-slate-200 rounded-md"
+              aria-label='Product price'
+              className="mt-2 block  w-full p-3 bg-gray-100 dark:bg-gray-800 rounded-md dark:placeholder:text-slate-100 "
               placeholder="Price: 399..."
               name="price"
               />
         </div>
           <input
             type="submit"
-            className="mt-5 w-full bg-indigo-700 hover:bg-indigo-800 p-2 text-white font-bold text-lg cursor-pointer rounded"
+            aria-label='Create Product'
+            className="mt-5 w-full bg-indigo-700 transition-colors duration-300 ease-in-out bg-gradient-to-b hover:bg-indigo-800 p-2 text-white font-bold text-lg cursor-pointer rounded py-3"
             value="Create product"
             />
         </legend>
