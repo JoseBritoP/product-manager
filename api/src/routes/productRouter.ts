@@ -47,7 +47,7 @@ productRouter.get('/',GET)
 
 /**
  * @swagger
- * /api/products:
+ * /api/product:
  *      get:
  *          summary: Get a list of products
  *          tags:
@@ -62,12 +62,14 @@ productRouter.get('/',GET)
  *                              type: array
  *                              items:
  *                                  $ref: '#/components/schemas/Product'
+ *              404:
+ *                description: Not found
  *
  */
 productRouter.get('/:id',GETBYID);
 /**
  * @swagger
- * /api/products/{id}:
+ * /api/product/{id}:
  *  get:
  *      summary: Get a product by ID
  *      tags:
@@ -95,7 +97,7 @@ productRouter.get('/:id',GETBYID);
 productRouter.post('/',postProduct,POST)
 /**
  * @swagger
- * /api/products:
+ * /api/product:
  *  post:
  *      summary: Creates a new product
  *      tags:
@@ -110,10 +112,10 @@ productRouter.post('/',postProduct,POST)
  *                      properties:
  *                          name:
  *                              type: string
- *                              example: "Monitor Curvo 49 Pulgadas"
+ *                              example: "MousePad"
  *                          price:
  *                              type: number
- *                              example: 399
+ *                              example: 24.99
  *      responses:
  *          201:
  *              description: Successful response
@@ -129,7 +131,7 @@ productRouter.put('/:id',PUT)
 
 /**
  * @swagger
- * /api/products/{id}:
+ * /api/product/{id}:
  *  put:
  *      summary: Updates a product with user input
  *      tags:
@@ -174,7 +176,7 @@ productRouter.patch('/:id',PATCH)
 
 /**
  * @swagger
- * /api/products/{id}:
+ * /api/product/{id}:
  *  patch:
  *      summary: Update Product inStock
  *      tags:
@@ -204,7 +206,7 @@ productRouter.delete('/:id',DELETE)
 
 /**
  * @swagger
- * /api/products/{id}:
+ * /api/product/{id}:
  *  delete:
  *      summary: Deletes logical a product by a given ID
  *      tags:
@@ -235,7 +237,7 @@ productRouter.delete('/delete/:id',TRUEDELETE)
 
 /**
  * @swagger
- * /api/products/delete/{id}:
+ * /api/product/delete/{id}:
  *  delete:
  *      summary: Deletes a product by a given ID
  *      tags:
