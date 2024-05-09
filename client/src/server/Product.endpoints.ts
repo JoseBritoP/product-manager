@@ -33,7 +33,7 @@ export async function editProduct(id:Product['id'],data:ProductData){
     });
     console.log(result)
     if(result.success){
-      const url = `${import.meta.env.VITE_API_URL}/product/${id}`;
+      const url = `https://product-manager-api-production.up.railway.app//product/${id}`;
       await axios.put(url,{
         name:result.output.name,
         price:result.output.price
@@ -47,7 +47,7 @@ export async function editProduct(id:Product['id'],data:ProductData){
 
 export async function getProducts(){
   try {
-    const url = `${import.meta.env.VITE_API_URL}/product`;
+    const url = `https://product-manager-api-production.up.railway.app//product`;
     const { data } = await axios.get(url);
     const result = safeParse(ProductsSchema,data)
     if(result.success) return result.output;
@@ -60,7 +60,7 @@ export async function getProducts(){
 
 export async function getProductById(id:Product['id']){
   try {
-    const url = `${import.meta.env.VITE_API_URL}/product/${id}`;
+    const url = `https://product-manager-api-production.up.railway.app//product/${id}`;
     const { data } = await axios.get(url);
     const result = safeParse(ProductSchema,data)
     if(result.success) return result.output;
@@ -73,7 +73,7 @@ export async function getProductById(id:Product['id']){
 
 export async function inStockProduct(id:Product['id']){
   try {
-    const url = `${import.meta.env.VITE_API_URL}/product/${id}`;
+    const url = `https://product-manager-api-production.up.railway.app//product/${id}`;
     const { data } = await axios.patch(url);
     const result = safeParse(ProductSchema,data)
     if(result.success) return result.output;
@@ -85,7 +85,7 @@ export async function inStockProduct(id:Product['id']){
 
 export async function deleteProduct(id: Product['id']) {
   try {
-      const url = `${import.meta.env.VITE_API_URL}/product/${id}`
+      const url = `https://product-manager-api-production.up.railway.app//product/${id}`
       await axios.delete(url)
   } catch (error) {
       console.log(error)
